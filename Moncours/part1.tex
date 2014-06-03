@@ -1,0 +1,41 @@
+\section{Conditional laws, prediction}
+
+We note in lowercase all the r.v $y$ and the parameter $\theta$
+:
+\begin{itemize}
+\item data : $y=(y_{1},...,y_{n}),\ n\geqslant1$
+\item parameters : $\theta=(\theta_{1},...,\theta_{n}),\ n\geq1$
+\end{itemize}
+\begin{de}
+
+$(\theta,y)$ means a vector of random variables
+
+$(\theta,y)\sim p(\theta,y)$ the joint law
+
+\end{de}
+
+the conditional law $p(y|\theta)=\frac{p(\theta,y)}{p(\theta)}$,
+where 
+\[
+p(\theta,y)=\underbrace{p(y|\overbrace{\theta}^{observed})}_{\text{The law of the sample (Likehood)}}\overbrace{p(\theta)}^{\text{priori law}}
+\]
+ 
+
+The marginal law : 
+\[
+p(y)=\int p(y|\theta)p(\theta)d\theta
+\]
+
+
+Learning : 
+\[
+\underset{\text{a priori}}{p(\theta)}\longrightarrow\underset{\text{a posteriori}}{p(\theta|y)}=\frac{p(\theta,y)}{p(y)}=p(y|\theta)\frac{p(\theta)}{p(y)}
+\]
+
+
+Loi a posteriori ``posteriori preditive'':
+
+\[
+p(y_{prep}|y)=\int p(y_{pred}|\theta)p(\theta|y)d\theta
+\]
+

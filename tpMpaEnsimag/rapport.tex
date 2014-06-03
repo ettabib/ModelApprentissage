@@ -1,0 +1,406 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsfonts,    amsmath,    amssymb,    amstext,    latexsym}
+\usepackage{graphicx,         epsfig,         color,fancyhdr,lastpage}
+\usepackage[latin1]{inputenc} 
+\usepackage[toc,page]{appendix} 
+\usepackage[french]{babel}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+
+\lstset{
+  language=R,
+  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
+  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=true,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+  % also try caption instead of title
+  escapeinside={\%*}{*)},            % if you want to add a comment within your code
+  sensitive=f,
+  morecomment=[l]--,
+  morestring=[d]",
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bf\small,
+  commentstyle=\itshape,
+  stringstyle=\sf,
+  extendedchars=true,
+  columns=[c]fixed
+}
+
+
+\lstset{
+  literate=
+  {À}{{\`A}}1 {Â}{{\^A}}1 {Ç}{{\c{C}}}1%
+  {à}{{\`a}}1 {â}{{\^a}}1 {ç}{{\c{c}}}1%
+  {É}{{\'E}}1 {È}{{\`E}}1 {Ê}{{\^E}}1 {Ë}{{\"E}}1% 
+  {é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {ë}{{\"e}}1%
+  {Ï}{{\"I}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1%
+  {ï}{{\"i}}1 {î}{{\^i}}1 {ô}{{\^o}}1%
+  {Ù}{{\`U}}1 {Û}{{\^U}}1 {Ü}{{\"U}}1%
+  {ù}{{\`u}}1 {û}{{\^u}}1 {ü}{{\"u}}1%
+}
+
+
+
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\newcommand{\RR}{\ensuremath{\mathbb{R}} }
+\newcommand{\noi}{\noindent} 
+\newcommand{\itb}{\item[$\bullet$]}
+\newcommand{\II}{\mbox{\large        1\hskip        -0,353em       1}}
+\newcommand{\dps}{\displaystyle}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\newcommand{\MG}{\mathcal{G}} 
+\newcommand{\MN}{\mathcal{N}}
+\newcommand{\ME}{\mathcal{E}}
+\newtheorem{de}{Définition} % les définitions et les théorèmes sont
+\newtheorem{theo}{Théorème}    % numérotés par section
+\newtheorem{prop}[theo]{Proposition}    % Les propositions ont le même compteur
+
+
+\def\<{{\guillemotleft}} \def\>{{\guillemotright}}
+
+\def\ligne#1{\leaders\hrule height #1\linethickness \hfill} 
+\numberwithin{equation}{section} 
+\textheight 24cm 
+\textwidth 18cm
+\oddsidemargin -1cm 
+\evensidemargin -1cm 
+\topmargin 0mm 
+\voffset -5mm 
+\footskip 15mm
+
+
+\setlength{\parindent}{0pt}                   \setlength{\parskip}{1ex}
+\setlength{\textwidth}{17cm}              \setlength{\textheight}{24cm}
+\setlength{\oddsidemargin}{-.7cm}    \setlength{\evensidemargin}{-.7cm}
+\setlength{\topmargin}{-.5in}
+
+
+
+
+\pagestyle{fancyplain} 
+\renewcommand{\headrulewidth}{0pt}
+\addtolength{\headheight}{1.6pt} 
+\addtolength{\headheight}{2.6pt}
+
+\lfoot{} 
+\cfoot{} 
+\rfoot{\footnotesize\sf  page~\thepage/\pageref{LastPage}}
+
+
+
+\usepackage[T1]{fontenc} \title{Compte rendu TP mpa \\
+  TP 2012} \author{Ettabib Mohammed\\ \and Zakaria Errochdi}
+
+
+\begin{document}
+
+
+\maketitle
+
+
+\tableofcontents
+
+\newpage
+\section{Modele de Poisson}
+\label{sec:exercice-1}
+
+\subsection{La vraissemblance du parametre du modele}
+\label{sec:la-vraissemblance-du}
+
+Dans ce  probleme, le  parametre inconnu est  $\theta$, nous allons  l'estimer a
+partir des donnees observees. Puisque  les observations sont independantes et de
+loi de Poisson, on donc $$p(y|\theta)={\displaystyle
+  \prod_{i=1}^{n}p(y_i|\theta)}$$
+
+la vraissemblance du modele s'ecrit donc comme suit :
+  \begin{align*}
+p(y|\theta)=\exp(-n\theta)\theta^{n\overline{y}}{\displaystyle
+  \prod_{i=1}^{n}\frac{1}{y_{i}!}}
+  \end{align*}
+
+  
+la loi a priori de $y$ n'est donc que :
+
+\begin{align*}
+  p(y|\theta)\propto \exp(-n\theta)\theta^{n\overline{y}}
+\end{align*}
+
+\subsection{Loi a posteriori}
+
+En utilisant la formule de bayes , on  deduit  que la loi a posteriori de $\theta$ est :
+  \begin{align*}
+     p(\theta|y) & \propto p(y|\theta)p(\theta)\\
+     &\exp(-n\theta)\theta^{n\overline{y}-1}
+    &\propto G(n\overline{y},n)
+  \end{align*}
+
+ou $G$ est la loi gamma , son esperance est donc $\overline{y}$.\\
+
+\subsection{Simulation par algorthme de Metropolise}
+\label{sec:simul-par-algorthme}
+
+l'algorithme de metropolis en prenant la loi a instrumentale $Q(\theta* | \theta)=\lambda\exp(-\lambda\theta^{*})$
+s'ecrit :
+
+\begin{algorithm}
+\caption{ Sample $p(\theta | y)$}
+\begin{algorithmic} 
+\ENSURE $\thetapost \sim p(\theta | y)$
+\FOR {i=1..K}
+\STATE Sample $\theta^* \sim Q(\theta* | \theta)$
+\STATE                                  ratio                                  =
+$\exp(-(n-\lambda)(\theta^*-\theta_i)).(\frac{\theta*}{\theta_i})^{n\overline{y}-1 } $
+\IF {ration >= runif(1)}
+$\theta_{i+1}=\theta^*$
+\ELSE 
+$\theta_{i+1}=\theta_{i+1}$
+\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+\newpage
+avec les donnees du probleme , l'algorithme s'ecrit dans le langage R:\\
+\begin{lstlisting}
+Y <- c(9,5,7,15,9,0,22,1,9,11,9,13,12,11,2,1,26,7,0)
+theta.post.exo1 <- function(Y,Nbite=10^4,  theta.0= 0.4){
+  n=length(Y)
+  theta.post <- theta.0
+  Lambda=1/mean(Y)
+  m=mean(Y)
+  for( i in 1:Nbite)
+    {
+      ## proposal
+      theta.1 <- rexp(1,Lambda)
+      ## calcul ration
+      ratio1 <-exp(-(n-Lambda)*(theta.1-theta.0))
+      ratio2 <- (theta.1/theta.0)^(n*m-1)
+      ratio <-  ratio1 * ratio2
+      if (runif(1)<ratio){
+        theta.0 <- theta.1
+      }
+      theta.post <- c(theta.post,theta.0)
+    }
+  
+  ## par(mfrow = c(1,2));
+  ## par(new=TRUE)
+  u <- seq(0, 20, length= 200);
+  plot(u, dgamma(u,shape=n*mean(Y),scale=1/n),xlim=c(6,12));
+  hist(theta.post,xlim=c(6,12),prob=T,add=T);
+  return (theta.post)
+  }
+
+\end{lstlisting}
+
+\subsection{Analyse des resultats}
+\label{sec:analyse-des-result}
+
+En executant l'algorithme on a alors  une estimation ponctuelle de la moyenne de
+$\theta$ a posteriori en prenant la moyenne de la loi resultante :
+
+\begin{lstlisting}
+> mean(theta.post)
+[1] 8.861452
+\end{lstlisting}
+l'intervalle de credibilite est , theoriquement , donne par $\theta_1,\theta_2$ tel que:
+
+
+
+
+  \begin{align*}
+    P(\theta\in[\theta_{1},\theta_{2}])&=
+    F_{G(n\bar{y},n)}(\theta_{2})-F_{G(n\bar{y},n)}(\theta_{1})\\
+&=1-\frac{{\alpha}}{2}-\frac{\alpha}{2}\\
+&=1-\alpha
+  \end{align*}
+donc on prend 
+$F_{G(n\overline{y},\frac{1}{n})}^{-1}(1-\frac{\alpha}{2})=\theta_{2}$ et $F_{G(n\overline{y},\frac{1}{n})}^{-1}(\frac{\alpha}{2})=\theta_{1}$
+\\
+\begin{lstlisting}[caption]
+> alpha=0.05
+> qgamma(1-alpha/2,shape=n*mean(Y),scale=1/n)
+[1] 10.2849
+> qgamma(alpha/2,shape=n*mean(Y),scale=1/n)
+[1] 7.604233
+\end{lstlisting}
+
+ainsi une estimation de l'intervalle de confiance est $[7.604233,10.2849]$ 
+on remarque que la moyenne appartient bien a l'intervalle de confiance.\\
+Experimentalement,  on   peut  trier  le   le  vecteur  $\theta$   a  posteriori
+Experimentalement  puis prendre  95\% des  valeur de  ce vecteur  pour  avoir un
+intervalle de confiance a 5\% :
+
+\begin{lstlisting}
+> theta.post<-theta.post.exo1(Y)
+> theta.post.triee<-sort(theta.post)
+> theta.post.triee[250]
+[1] 7.735414
+> theta.post.triee[10000-250]
+[1] 10.16884
+\end{lstlisting}
+
+On voit une  fois de plus que l'intervalle de  confiance theorique concorde avec
+celui experimentale , et les deux incluent la valeur de la moyenne de $\theta$.
+
+\begin{figure}[htbp]
+\begin{center}
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=8 cm, angle=0]{quest5.pdf}\\
+  \caption{{\it Histogramme et loi a posteriori de $\theta$}}\label{postTheta}
+  \end{center}
+\end{figure}
+
+
+Finalement a  partir des  donnees y on  a simule  la loi predictive  de $\theta$
+. Inversement  a partir  de cette  loi on peut  simuler la  loi a  posteriori de
+y. Ainsi on  aura une nouvelle donnee $\tilde{y}$ qui peut  nous donner une idee
+sur  la prediction de  la prochaine  valeur de  y. On  considerera alors  que la
+meilleure estimation de la nouvelle donne $\tilde{y}$ est donc sa moyenne : $y_{pred}=mean(\tilde{y})$
+\begin{lstlisting}
+## fonction generant une nouvelle donne YPred
+ypredictive <- function(Y){
+  theta.post <- c(theta.post.exo1(Y))
+  YPred <- rpois(length(theta.post),theta.post)
+  return (YPred)
+  }
+> mean(ypredictive(Y))
+[1] 8.877912
+> mean(Y)
+[1] 8.894737
+
+\end{lstlisting}
+
+On  peut aussi  obtenir cette  estimation predictive  a partir  de la  formule :
+$p(y_{pred}|y)={\displaystyle \int p(y_{pred}|\theta)p(\theta|y)d\theta}$
+
+on a $$p(y_{pred}|\theta)=\frac{\theta^{y_{pred}}}{y_{pred}!}\exp(-\theta)$$ et 
+$$p(\theta|y)\propto\exp(-n\theta)\theta^{n\bar{y}-1}$$
+donc:
+\begin{eqnarray*}
+p(y_{pred}|y) & \propto & \frac{1}{y_{pred}!}\frac{1}{(n+1)^{y_{pred}}}\Gamma(n\bar{y}+y_{pred})\\
+ & \propto & f(y_{pred},\frac{1}{n+1},n\bar{y})
+\end{eqnarray*}
+ ou 
+$$f(k,r,p)=\frac{\Gamma(k+r)}{k!\Gamma(r)}p^{r}(1-p)^{k}$$  est  la  loi  negative
+binomiale.\\
+
+\begin{lstlisting}
+ypredictive.theorique <- function(Y){
+  theta.post <- theta.post.exo1(Y)
+  m <- length(theta.post)
+  n <- m*mean(Y)
+  p <- m/(m+1)
+  YPred <- rnbinom(10000,size=n,prob=p)
+  return (YPred)
+  }
+> mean(ypredictive.theorique(Y))
+[1] 8.8917
+> mean(Y)
+[1] 8.894737
+\end{lstlisting}
+ Estimation encore plus precise !!!
+
+
+%% ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%% Exercice 2
+%% ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\section{Exercice 2}
+
+Nous avons choisi le couple $(\alpha ,\beta )$ de façon que le couple $(\mu ,\nu)$ soit de loi uniforme sur $\mathbb{R}^2$, dans ce cas :
+\begin{center}
+\begin{equation*}
+f_{(\mu ,\nu)} \propto 1
+\end{equation*}
+\end{center}
+
+Nous avons:
+
+\begin{center}
+\begin{equation*}
+(\mu ,\nu)= (\frac{\alpha}{\alpha+\beta} , \frac{1}{\sqrt{\alpha+\beta}} )=\varphi^{-1}(\alpha ,\beta )
+\end{equation*}
+\end{center}
+
+Nous allons utilisé la formule du changement de variable pour trouver la densité de la loi $(\alpha ,\beta )$, suivant cette relation:
+
+\begin{center}
+ \begin{equation*}
+  f_{(\alpha ,\beta )}(z,t) = |Jac \varphi^{-1}|(z,t) f_{(\mu ,\nu)}(\varphi^{-1}(z,t))
+ \end{equation*}
+\end{center}
+
+Or nous avons $f_{(\mu ,\nu)}((\varphi^{-1}(z,t))$ $\propto 1$  , et  $ \textrm{Jac}\, \varphi^{-1}(\alpha ,\beta)$ vaut :
+
+\begin{center}
+ \begin{equation*}
+\begin{pmatrix}
+ \frac{\beta}{(\alpha+\beta)^2} & \frac{1}{2}(\alpha+\beta)^{3/2}  \\
+\frac{-\alpha}{(\alpha+\beta)^2} & \frac{-1}{2}(\alpha+\beta)^{3/2}
+\end{pmatrix}
+\end{equation*}
+\end{center}
+
+son determinant vaut :
+\begin{center}
+\begin{equation*}
+ \frac{1}{(\alpha+\beta)^{5/2}}
+\end{equation*}
+\end{center}
+
+En remplaçant dans la formule du changement de variable, on trouve :
+\begin{center}
+\begin{equation*}
+ f_{(\alpha ,\beta )} \propto \frac{1}{(\alpha+\beta)^{5/2}}
+\end{equation*}
+\end{center}
+
+Puisque les $y_i$ représentent le nombre des rats qui ont développé la tumeurs dans le groupe i, et puisque les groupes sont indépendant donc les $y_i$ sont indépendants, ainsi nous obtenons:
+\begin{center}
+\begin{equation*}
+ p(y|\theta )\propto \Pi p(y_i|\theta )
+\end{equation*}
+\end{center}
+Or les $y_i$ suivent la loi binomiale $B(\theta _i, n_i)$, donc:
+
+\begin{center}
+\begin{equation*}
+ p(y|\theta ) \propto \Pi {n_i\choose y_i} \theta _i^{y_i} ( 1 - \theta ) ^{n_i - y_i}
+\end{equation*}
+\end{center}
+
+On ce qui concerne la loi à postériorie $p(\theta| \alpha ,\beta , y)$, nous utilisont la formule Bayésien, et nous obtenons:
+\begin{center}
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline 
+    Numéro  classe &  la  données $\theta_i$  &  Moyenne &  Médiane  & Intervale  de
+    crédibilité 95 \\ 
+    \hline
+    \hline 
+    41 & 0.15 & 0.153 & 0.14320 & [0.03,0.32] \\ 
+    \hline
+    71 & 0.28  & 0.292 & 0.28 & [0.092,0.54]   \\
+    \hline
+    
+  \end{tabular}
+\end{center}
+
+ On remarque que les résultats obtenus par la simulation sont très proches des données expérimentales  
+
+
+\end{document}

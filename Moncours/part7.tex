@@ -1,0 +1,68 @@
+% Aperçu corps
+
+
+\section{Structure models, hierarchic and mixture:}
+
+the probabilistic models can be structured (hierarchicly) as :
+
+\begin{eqnarray*}
+y|\theta & \sim & p(y|\theta)\\
+\theta|\psi & \sim & p(\theta|\psi)\\
+\psi & \sim & p(\psi)
+\end{eqnarray*}
+
+
+In this case, the liklihood can b defined with many ways, depanding
+on the advantage holden in $\theta$ or $\psi$ :
+
+\begin{eqnarray*}
+\text{Parametre} &  & \text{Likehood}\\
+\theta &  & p(y|\theta)\\
+\psi &  & p(y|\psi)=\int p(y|\theta)p(\theta|\psi)d\theta\\
+(\theta,\psi) &  & p(y|\theta,\psi)=p(y|\theta)\longrightarrow\text{we don't need \ensuremath{\psi}\ to build y}
+\end{eqnarray*}
+
+
+\begin{de}
+
+\[
+\text{Law a posteriori}\begin{cases}
+p(\theta,\psi)\\
+p(\theta|\psi)\\
+p(\psi)
+\end{cases}
+\]
+
+
+\end{de}
+
+The a posteriori laws are :
+
+\begin{eqnarray*}
+p(\theta,\psi|y) & \propto & p(y|\theta,\psi)p(\theta,\psi)\\
+ & \propto & p(y|\theta)p(\theta|\psi)p(\psi)
+\end{eqnarray*}
+
+
+so 
+\[
+p(\theta|y)\propto\left(\int p(\theta|\psi)p(\psi)d\psi\right)p(y|\theta)
+\]
+
+
+\begin{example}[Algorithm of Gibbs]
+
+Algorithm of similation alowding sampling the law $p(\theta,\psi|y)$
+:
+\begin{enumerate}
+\item Initial condition : $(\theta_{0},\psi_{0})$
+\item $\forall t\in[1,T]$ with $(\theta_{t-1},\psi_{t-1})$ known
+:
+(Cycle)
+
+\begin{enumerate}
+\item Sample $\theta_{t}$ with the law $p(\theta|\psi,y)$
+\item Sample $\psi_{t}$with $p(\psi|\theta_{t},y$)
+\end{enumerate}
+\end{enumerate}
+\end{example}

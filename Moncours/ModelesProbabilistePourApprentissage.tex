@@ -1,0 +1,139 @@
+%% LyX 2.0.7.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{esint}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\documentclass{Math}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\section{Conditional laws, prediction}
+
+We note in lowercase all the r.v $y$ and the parameter $\theta$
+:
+\begin{itemize}
+\item data : $y=(y_{1},...,y_{n}),\ n\geqslant1$
+\item parameters : $\theta=(\theta_{1},...,\theta_{n}),\ n\geq1$
+\end{itemize}
+\begin{de}
+
+$(\theta,y)$ means a vector of random variables
+
+$(\theta,y)\sim p(\theta,y)$ the joint law
+
+\end{de}
+
+for example : $\theta>0,p(y|\theta)=\exp(-\theta y),\ y>0$ means
+the y have exponential distribution with $\theta$ parameter. $\theta$
+is a random variable.
+
+the conditional law $p(y|\theta)=\frac{p(\theta,y)}{p(\theta)}$,
+where 
+\[
+p(\theta,y)=\underbrace{p(y|\overbrace{\theta}^{observed})}_{\text{The law of the sample (Likehood)}}\overbrace{p(\theta)}^{\text{priori law}}
+\]
+ 
+
+The marginal law : 
+\[
+p(y)=\int p(y|\theta)p(\theta)d\theta
+\]
+
+
+Learning : 
+\[
+\underset{\text{a priori}}{p(\theta)}\longrightarrow\underset{\text{a posteriori}}{p(\theta|y)}=\frac{p(\theta,y)}{p(y)}=p(y|\theta)\frac{p(\theta)}{p(y)}
+\]
+
+
+Law a posteriori ``posteriori predictive'':
+
+\[
+p(y_{prep}|y)=\int p(y_{pred}|\theta)p(\theta|y)d\theta
+\]
+
+
+Esperance conditionnelle predictive : on observe y et on souhaite
+construire une une prediction de $\theta$ sous la forme $g(y)$ .
+la meilleure prediction est donc $E[\theta|y]$.
+
+Loi a posteriori predictive : 
+
+\[
+p(y_{pred}|y)=\int p(y_{pred}|\theta)p(\theta)d\theta
+\]
+
+
+
+\section{Covariance Matrix - Gaussian vectors}
+
+
+\subsection{Covariance Matrix}
+
+\begin{de}
+
+if $y\in\mathbb{R^{d}}$ , the covariance matrix $C_{y}=(cov(y_{i},y_{j}))_{(i,j)\in[1,n]}$
+
+\end{de}
+
+\begin{prop}
+\begin{itemize}
+\item $C_{ij}=C_{ji},C_{ii}>0$
+\item Cov is bilinear
+\item Cauchy Shwartz\\
+\[
+|cov(y_{i},y_{j})|\leq\sqrt{Var(y_{i})}\sqrt{Var(y_{j})}\underset{def}{=}\sigma(y_{i})\sigma(y_{j})
+\]
+
+\end{itemize}
+\end{prop}
+
+
+\section{Markov chains}
+
+\begin{de}
+
+Let's consider a process :
+
+\begin{eqnarray*}
+p(\theta_{t+1}|\theta_{t,}\theta_{t-1,}...,\theta_{0}) & = & p(\theta_{t+1}|\theta_{t})\longleftarrow\text{(Iterative process)}\\
+ & = & p(\theta_{1}|\theta_{0})\longleftarrow\text{(homogenius process, don't depend on time)}
+\end{eqnarray*}
+
+\begin{itemize}
+\item We said that the chain is homogenous if the conditional law don't
+depend on time t
+\item Notation : ``process''
+\[
+p(\theta_{t+1}=\theta'|\theta_{t}=0)=p(\theta'|\theta)
+\]
+
+\item We note k the transition kernel
+\[
+k(\theta_{0},\theta_{1})=p(\theta_{1}|\theta_{0})
+\]
+
+\item If E is finite then $K=(k(i,j))_{i,j}\in E$ is called a transition
+matrix it satisfied:
+\begin{eqnarray*}
+0\leq k(i,j)\leq1 & \& & \sum_{j\in E}k(i,j)=1\\
+\end{eqnarray*}
+
+\item if E is continuous then $k(\theta_{0},\theta_{1})$ is a function
+:
+\begin{eqnarray*}
+k(\theta_{0},\theta_{1})\geq0 & \& & \int_{E}\underbrace{k(\theta_{0},\theta_{1})}_{\text{transition kernel}}d\theta_{1}=1,\forall\theta_{0}\\
+\end{eqnarray*}
+
+\end{itemize}
+\end{de}
+\end{document}

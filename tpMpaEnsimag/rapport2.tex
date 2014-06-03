@@ -1,0 +1,652 @@
+ \documentclass[12pt]{article}
+
+\usepackage{amsfonts,    amsmath,    amssymb,    amstext,    latexsym}
+\usepackage{graphicx,         epsfig,         color,fancyhdr,lastpage}
+\usepackage[latin1]{inputenc} 
+\usepackage[toc,page]{appendix} 
+\usepackage[french]{babel}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+
+\lstset{
+  language=R,
+  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
+  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=true,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+  % also try caption instead of title
+  escapeinside={\%*}{*)},            % if you want to add a comment within your code
+  sensitive=f,
+  morecomment=[l]--,
+  morestring=[d]",
+  basicstyle=\small\ttfamily,
+  keywordstyle=\bf\small,
+  commentstyle=\itshape,
+  stringstyle=\sf,
+  extendedchars=true,
+  columns=[c]fixed
+}
+
+
+\lstset{
+  literate=
+  {À}{{\`A}}1 {Â}{{\^A}}1 {Ç}{{\c{C}}}1%
+  {à}{{\`a}}1 {â}{{\^a}}1 {ç}{{\c{c}}}1%
+  {É}{{\'E}}1 {È}{{\`E}}1 {Ê}{{\^E}}1 {Ë}{{\"E}}1% 
+  {é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {ë}{{\"e}}1%
+  {Ï}{{\"I}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1%
+  {ï}{{\"i}}1 {î}{{\^i}}1 {ô}{{\^o}}1%
+  {Ù}{{\`U}}1 {Û}{{\^U}}1 {Ü}{{\"U}}1%
+  {ù}{{\`u}}1 {û}{{\^u}}1 {ü}{{\"u}}1%
+}
+
+
+
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\newcommand{\RR}{\ensuremath{\mathbb{R}} }
+\newcommand{\noi}{\noindent} 
+\newcommand{\itb}{\item[$\bullet$]}
+\newcommand{\II}{\mbox{\large        1\hskip        -0,353em       1}}
+\newcommand{\dps}{\displaystyle}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\newcommand{\MG}{\mathcal{G}} 
+\newcommand{\MN}{\mathcal{N}}
+\newcommand{\ME}{\mathcal{E}}
+\newtheorem{de}{Définition} % les définitions et les théorèmes sont
+\newtheorem{theo}{Théorème}    % numérotés par section
+\newtheorem{prop}[theo]{Proposition}    % Les propositions ont le même compteur
+
+
+\def\<{{\guillemotleft}} \def\>{{\guillemotright}}
+
+\def\ligne#1{\leaders\hrule height #1\linethickness \hfill} 
+\numberwithin{equation}{section} 
+\textheight 24cm 
+\textwidth 18cm
+\oddsidemargin -1cm 
+\evensidemargin -1cm 
+\topmargin 0mm 
+\voffset -5mm 
+\footskip 15mm
+
+
+\setlength{\parindent}{0pt}                   \setlength{\parskip}{1ex}
+\setlength{\textwidth}{17cm}              \setlength{\textheight}{24cm}
+\setlength{\oddsidemargin}{-.7cm}    \setlength{\evensidemargin}{-.7cm}
+\setlength{\topmargin}{-.5in}
+
+
+
+
+\pagestyle{fancyplain} 
+\renewcommand{\headrulewidth}{0pt}
+\addtolength{\headheight}{1.6pt} 
+\addtolength{\headheight}{2.6pt}
+
+\lfoot{} 
+\cfoot{} 
+\rfoot{\footnotesize\sf  page~\thepage/\pageref{LastPage}}
+
+
+
+\usepackage[T1]{fontenc} \title{Compte rendu TP mpa \\
+  TP 2012} \author{Ettabib Mohammed\\ \and Zakaria Errochdi}
+
+
+\begin{document}
+
+
+\maketitle
+
+
+\tableofcontents
+
+\newpage
+\section{Modele de Poisson}
+\label{sec:exercice-1}
+
+\subsection{La vraisemblance du parameter du modele}
+\label{sec:la-vraissemblance-du}
+
+Dans ce probleme , le paramètre inconnu est $\theta$, nous allons l'estimer a
+partir des données observées. Puisque  les observations sont indépendantes et de
+loi de Poisson, on donc $$p(y|\theta)={\displaystyle
+  \prod_{i=1}^{n}p(y_i|\theta)}$$
+
+la vraisemblance du modele s'écrit donc comme suit :
+  \begin{align*}
+p(y|\theta)=\exp(-n\theta)\theta^{n\overline{y}}{\displaystyle
+  \prod_{i=1}^{n}\frac{1}{y_{i}!}}
+  \end{align*}
+
+  
+la loi a priori de $y$ n'est donc que :
+
+\begin{align*}
+  p(y|\theta)\propto \exp(-n\theta)\theta^{n\overline{y}}
+\end{align*}
+
+\subsection{Loi a posteriori}
+
+En utilisant la formule de Bayes , on  déduit  que la loi a posteriori de $\theta$ est :
+  \begin{align*}
+     p(\theta|y) & \propto p(y|\theta)p(\theta)\\
+     & \propto \exp(-n\theta)\theta^{n\overline{y}-1}\\
+    &\propto G(n\overline{y},n)
+  \end{align*}
+
+ou $G$ est la loi gamma , son esperance est donc $\overline{y}$.\\
+
+\subsection{Simulation par algorithme de Metropolise}
+\label{sec:simul-par-algorthme}
+
+Afin de simuler la loi gamma, nous allons utilisé l'algorithme de Metropolise en prenant la loi instrumentale la loi exponentielle, donc nous avons:   $Q(\theta* | \theta)=\lambda\exp(-\lambda\theta^{*})$. Le ratio s'écrit :
+\begin{align*}
+  r = \exp(-(n-\lambda)(\theta^*-\theta_i)).(\frac{\theta*}{\theta_i})^{n\overline{y}-1 }
+\end{align*} 
+
+On donne içi le schèma général de l'algorithme de Métropolis avec la configuration du problème. Pour le code sous R, il faut consulter l'annexe A . \\
+\begin{algorithm}
+\caption{ Sample $p(\theta | y)$}
+\begin{algorithmic} 
+\ENSURE $\thetapost \sim p(\theta | y)$
+\FOR {i=1..K}
+\STATE Sample $\theta^* \sim Q(\theta* | \theta)$
+\STATE                                  ratio                                  =
+$\exp(-(n-\lambda)(\theta^*-\theta_i)).(\frac{\theta*}{\theta_i})^{n\overline{y}-1 } $
+\IF {ration >= runif(1)}
+$\theta_{i+1}=\theta^*$
+\ELSE 
+$\theta_{i+1}=\theta_{i+1}$
+\ENDIF
+\ENDFOR
+\end{algorithmic} 
+\end{algorithm}
+
+\subsection{Analyse et comparaison}
+\subsubsection{Analyse des résultat}
+\label{sec:analyse-des-result}
+
+En prenant la moyenne des données simulées, on obtient une estimation ponctuelle de $\theta$ a posteriori :
+
+\begin{lstlisting}
+> mean(theta.post)
+[1] 8.861452
+> mean(Y)
+[1] 8.894737
+\end{lstlisting}
+Cette valeur est très proche de la moyenne du vecteur de données $Y$, cela consolide l'hypothèse que y est de loi de poisson de paramètre $\theta$ puisque si$ X\sim Poiss(\theta)$ alors $E(X) = \theta$, et un estimateur de l'espérance n'est que sa moyenne empirique. \\     
+En ce qui concerne l'intervalle de crédibilité nous avons suivi deux approches une théorique et l'autre expérimentale. Théoriquement parlant , soit $\theta_1,\theta_2$ tel que $ P(\theta\in [\theta_1,\theta_2] = 95 \textperthousand $, donc :
+  \begin{align*}
+    P(\theta\in[\theta_{1},\theta_{2}])&=
+    F_{G(n\bar{y},n)}(\theta_{2})-F_{G(n\bar{y},n)}(\theta_{1})\\
+&=1-\frac{{\alpha}}{2}-\frac{\alpha}{2}\\
+&=1-\alpha
+  \end{align*}
+Donc il faut avoir :
+$F_{G(n\overline{y},\frac{1}{n})}^{-1}(1-\frac{\alpha}{2})=\theta_{2}$ et $F_{G(n\overline{y},\frac{1}{n})}^{-1}(\frac{\alpha}{2})=\theta_{1}$
+\\
+Sous R on obtient: 
+\begin{lstlisting}[caption]
+> alpha=0.05
+> qgamma(1-alpha/2,shape=n*mean(Y),scale=1/n)
+[1] 10.2849
+> qgamma(alpha/2,shape=n*mean(Y),scale=1/n)
+[1] 7.604233
+\end{lstlisting}
+
+ainsi une estimation de l'intervalle de crédibilité à $95 \textperthousand$ est $[7.604233,10.2849]$.
+On remarque que la moyenne appartient bien à l'intervalle de crédibilité à $95\textperthousand $.\\
+Expérimentalement parlant, on trie le vecteur  $\theta$ à posteriori, pour $10^4$ itération on est sur que $95 \textperthousand$ des données seront dans $[\theta_{250}, \theta_{9750}]$, sous R on obtient: 
+
+\begin{lstlisting}
+> theta.post<-theta.post.exo1(Y)
+> theta.post.triee<-sort(theta.post)
+> theta.post.triee[250]
+[1] 7.735414
+> theta.post.triee[10000-250]
+[1] 10.16884
+\end{lstlisting}
+
+On voit une fois de plus que l'intervalle théorique concorde avec
+l'experimentale , et les deux incluent la valeur de la moyenne de $\theta$.
+
+Afin de s'assurer que les résultats sont correctes, nous avons comparé l'histogramme des données simulées $\theta$ à posteriori avec la densité de la loi gamma (voire la figure-a). Ainsi on consolide l'hypothèse que la loi gamma est bien simuler par l'algorithme de Métropolis.    
+
+\begin{figure}[h!]
+\centering
+\subfloat[]{\includegraphics[width=0.3\textwidth]{exo1HistGamma.pdf}\label{Sl_compar_s}}
+\subfloat[]{\includegraphics[width=0.3\textwidth]{gProbaExo1.pdf}\label{Tf_compar_s}}
+\caption{a- Histogramme et densité de Gamma, b- Graphe de probabilté }
+\end{figure} 
+
+
+
+On peut aussi utilisé un autre test  comme simuler un grand nombre de données par la loi gamma et tracer les résultats obtenue en fonction de $\theta$ à postériorie (voire la figure-b ) , logiquement on doit trouver une droite comme graphe résultant, c'est le principe des graphes de probabilité.
+\subsubsection{Vitesse de l'algorithme }
+Nous avons compare la vitesse de convergence de l'algorithme selon la loi instrumentale. En fait nous traçons le graphe log-vraissemblance pour deux lois instrumentales de variance différente: a-Loi $Exp(1/8)$ b- Loi $Exp(1)$. On remarque que le premier converge plus vite que le deuxième puisque la variance du premier est très grande. Donc il faut bien choisir la loi instrumentale pour accélérer la vitesse de convergence de l'algorithme.
+\begin{figure}[h!]
+\centering
+\subfloat{\includegraphics[width=0.4\textwidth]{logVraExo1Var64.pdf}\label{Sl_compar_s}}
+\subfloat{\includegraphics[width=0.4\textwidth]{logVraEx1Var1.pdf}\label{Tf_compar_s}}
+\caption{Log-vraisemblace de $\theta$ : a- $Exp(1/8)$ , b-$Exp(1)$}
+\end{figure} 
+ 
+   
+\subsection{La loi prédictive}
+\label{sec:pred}
+
+Finalement a  partir des  données $y$ on peut proposé une valeurs prédictive $y_{pred}$. Pour cela nous avons fait deux méthodes. Puisque dans notre modèle $y_{pred}$ suit la loi de poisson de paramètre $\theta$, nous allons simuler cette données à partir des $\theta$ à posteriori , et prendre juste la moyenne pour estimer $y_{pred}$. Sous R on fait:       
+
+\begin{lstlisting}
+## fonction generant une nouvelle donne YPred
+ypredictive <- function(Y){
+  theta.post <- c(theta.post.exo1(Y))
+  YPred <- rpois(length(theta.post),theta.post)
+  return (YPred)
+  }
+> mean(ypredictive(Y))
+[1] 8.877912
+> mean(Y)
+[1] 8.894737
+\end{lstlisting}
+Ainsi $y_{pred}=8.87$ qui est très proche de la moyenne des données. Donc le modèle est bien cohérent.  
+
+Théoriquement, On  peut aussi  obtenir cette  estimation prédictive à partir  de la  formule :
+$p(y_{pred}|y)={\displaystyle \int p(y_{pred}|\theta)p(\theta|y)d\theta}$
+
+on a $$p(y_{pred}|\theta)=\frac{\theta^{y_{pred}}}{y_{pred}!}\exp(-\theta)$$ et 
+$$p(\theta|y)\propto\exp(-n\theta)\theta^{n\bar{y}-1}$$
+donc:
+\begin{eqnarray*}
+p(y_{pred}|y) & \propto & \frac{1}{y_{pred}!}\frac{1}{(n+1)^{y_{pred}}}\Gamma(n\bar{y}+y_{pred})\\
+ & \propto & f(y_{pred},\frac{1}{n+1},n\bar{y})
+\end{eqnarray*}
+ ou 
+$$f(k,r,p)=\frac{\Gamma(k+r)}{k!\Gamma(r)}p^{r}(1-p)^{k}$$  est  la  loi binomiale  negative
+.\\
+
+Sous R, cette loi est simulée par la commande rnbinom. On obtient donc:
+\begin{lstlisting}
+ypredictive.theorique <- function(Y){
+  theta.post <- theta.post.exo1(Y)
+  m <- length(theta.post)
+  n <- m*mean(Y)
+  p <- m/(m+1)
+  YPred <- rnbinom(10000,size=n,prob=p)
+  return (YPred)
+  }
+> mean(ypredictive.theorique(Y))
+[1] 8.8917
+> mean(Y)
+[1] 8.894737
+\end{lstlisting}
+Ainsi Estimation est encore plus precise !!!
+
+
+%% ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%% Exercice 2 
+%% ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\section{Modèle hiérarchique, effet aléatoire et Shrinkage}
+\subsection{La vraissemblance du modèle}
+Nous avons choisi le couple $(\alpha ,\beta )$ de façon que le couple $(\mu ,\nu)$ soit de loi uniforme sur $\mathbb{R}^2$, dans ce cas :   
+\begin{align*}
+p_{(\mu ,\nu)} \propto 1
+\end{equation*}
+\end{align*}
+Nous avons: 
+\begin{align*}
+(\mu ,\nu)= (\frac{\alpha}{\alpha+\beta} , \frac{1}{\sqrt{\alpha+\beta}} )=\varphi^{-1}(\alpha ,\beta )
+\end{align*}
+Nous allons utilisé la formule du changement de variable pour trouver la densité de la loi $(\alpha ,\beta )$, suivant cette relation:
+\begin{align*}
+   f_{(\alpha ,\beta )}(z,t) = |Jac \varphi^{-1}|(z,t) f_{(\mu ,\nu)}(\varphi^{-1}(z,t))
+\end{align*}
+ Or nous avons $f_{(\mu ,\nu)}((\varphi^{-1}(z,t))$ $\propto 1$  , et  $ \textrm{Jac}\, \varphi^{-1}(\alpha ,\beta)$ vaut : 
+\begin{align*}
+\begin{pmatrix}
+  \frac{\beta}{(\alpha+\beta)^2} & \frac{1}{2}(\alpha+\beta)^{3/2}  \\ 
+ \frac{-\alpha}{(\alpha+\beta)^2} & \frac{-1}{2}(\alpha+\beta)^{3/2}  
+\end{pmatrix}
+\end{align*}
+
+son determinant vaut : 
+\begin{align*}
+  \frac{1}{(\alpha+\beta)^{5/2}} 
+\end{align*}
+
+En remplaçant dans la formule du changement de variable, on trouve : 
+\begin{align*}
+  f_{(\alpha ,\beta )} \propto \frac{1}{(\alpha+\beta)^{5/2}}
+\end{align*}
+
+Puisque les $y_i$ représentent le nombre des rats qui ont développé la tumeurs dans le groupe i, et puisque les groupes sont indépendant donc les $y_i$ sont indépendants, ainsi nous obtenons: 
+\begin{align*}
+  p(y|\theta )\propto \Pi p(y_i|\theta )  
+\end{align*}
+Or les $y_i$ suivent la loi binomiale $B(\theta _i, n_i)$, donc: 
+
+\begin{align*}
+  p(y|\theta ) \propto \Pi {n_i\choose y_i} \theta _i^{y_i} ( 1 - \theta ) ^{n_i - y_i}   
+\end{align*}
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\subsection{La Loi à postériorie}
+En ce qui concerne la loi à posteriori $p(\theta| \alpha ,\beta , y)$, nous utilisons la formule Bayésien, et nous obtenons:
+\begin{align*}
+  p(\theta| \alpha ,\beta , y) \propto p(y | \alpha ,\beta , \theta ) p(\theta| \alpha ,\beta )  
+\end{align*}
+Puisque $(\alpha ,\beta)$ sont les hyper-paramètres du modèle hiérarchique nous obtenons:
+ \begin{align*}
+     p(y | \alpha ,\beta , \theta ) \propto p(y | \theta )
+\end{align*}
+finalement nous trouvons la relation suivante:
+ \begin{align*}
+  p(\theta| \alpha ,\beta , y) \propto p(y | \theta ) p(\theta| \alpha ,\beta )  
+  \end{align*}
+En remplaçant les lois par leurs densité et probabilté ,sachant que les $\theta _i$ sont indépendantes et suivent la même loi $Beta(\alpha ,\beta )$,  on trouve : 
+\begin{align*}
+  p(\theta| \alpha ,\beta , y) \propto \Pi {n_i\choose y_i} \theta _i^{y_i} ( 1 - \theta ) ^{n_i - y_i} \Pi \theta _i^{\alpha -1} (1-\theta_i)^{\beta-1}       
+  \end{align*}
+Donc : 
+\begin{align*}
+  p(\theta| \alpha ,\beta , y) \propto \Pi {n_i\choose y_i} \theta _i^{y_i+ \alpha -1} ( 1 - \theta ) ^{n_i - y_i + \beta-1}        
+ \end{align*}
+
+\subsection{Simulation du modèle}
+Nous allons simuler la loi $(\theta,\alpha ,\beta| y)$. Dans ce cas, nous utilisons le principe de l'enchantillonage de Gibbs, pour cette raison il faut calculer les lois marginales. Nous allons expliciter ces loi dans les paragraphes suivants. Certaines loi ne sont pas directement simulable, dans ce cas nous utilisons l'algorithme de Métropolis Hasting avec juste une seule étape. 
+Le schema de l'algorithme est donnée dans l'énoncé nous allons juste expliquer les étapes de cet algorithme.
+\subsubsection{Etape 1, Initialisation  } 
+Cette étape n'est pas trop importante, par contre elle influence la vitesse de convergence de l'algorithme général. En effet, pour accélèrer la convergence nous allons choisir des lois instrumentales de façon à avoir des moyens proche des valeurs réeles des paramètres.  
+\subsubsection{Etape 2 Simulation du couple $(\alpha ,\beta)$  par algorithme de Métropolis-Hasting } 
+Dans cette étape nous devons proposer une valeur de $(\alpha_k ,\beta_k | \theta_{k-1}, y)$. Cette dernière suit la loi donnée par le calcule suivant: 
+\begin{align*}
+  p( \alpha ,\beta| \theta , y) \propto p(\theta | \alpha ,\beta ,y) p( \alpha ,\beta | y)\\
+                                \propto p(\theta | \alpha ,\beta) p( \alpha ,\beta)\\
+                                \propto \prod_{i=1}^{n} p(\theta_i | \alpha ,\beta) p( \alpha ,\beta) \\
+                                \propto \frac{\prod_{i=1}^{n} \theta_{i}^{\alpha-1}(1-\theta_i)^{\beta-1}}{(\alpha+\beta)^{5/2}}  
+\end{align*}
+Cette loi n'est pas directement simulable donc on utilise l'algorithme de Métropolis-Hasting, puisque il suffit de proposé une valeur de $(\alpha_k ,\beta_k | \theta_{k-1}, y)$ une seulw étape de l'algorithme suffit. Voici la configuration de l'algorithme:
+\begin{center}
+\begin{itemize}
+\item $Q(\theta^t,\theta^*)= \lambda _1 \lambda _ 2 \exp(-\lambda _1 \alpha_t-\lambda _2 \beta_t)$
+\item $\varPi (\theta^t) \propto  \frac{\prod_{i=1}^{n} \theta_{i}^{\alpha-1}(1-\theta_i)}{(\alpha+\beta)^{5/2}}$
+\end{itemize}
+\end{center}
+Nous choisissons les paramettres de la loi instrumentale, de façon à avoir des résultats proches de la réalité. En effet nous avons calculer des estimateurs de $\tilde{\alpha}$ et $\tilde{\beta}$ à partir de $\theta_{k-1}$, avec:
+\begin{align*}
+\tilde{\alpha} = \bar{\theta_{k-1}} \left(\frac{\bar{\theta_{k-1}} (1 - \bar{\theta_{k-1}})}{v} - 1 \right)\\
+\tilde{\beta} = (1-\bar{\theta_{k-1}}) \left(\frac{\bar{\theta_{k-1}} (1 - \bar{\theta_{k-1}})}{v} - 1 \right)\\
+\end{align*}
+Ou $\bar{\theta_{k-1}}$ est la moyenne empirique, et $v$ la variance empirique de $\theta_{k-1}$. \\
+Ainsi le ratio de l'algorithme :
+\begin{center}
+\begin{itemize}  
+\item $r_1 =  (\frac{\alpha _t + \alpha ^*}{ \alpha ^* + \beta ^*})^\frac{5}{2} $ 
+\item $r_2 =  \exp(-\lambda _1(\alpha _t-\alpha ^*)-\lambda _2( \beta _t-\beta^*)) $
+\item $r_3 = \prod_{i=1}^{n} p(\theta_i | \alpha ,\beta) $
+\item $ r = r_1*r_2*r_3$
+\end{itemize}
+\end{center}
+\subsubsection{Etape 3: Simulation de la loi à postériorie par l'échantillonnage de Gibs  } 
+Nous rappelons brièvement le principe: 
+\begin{itemize}
+   \item Commencer par une initiale arbitraire $\theta_0$ 
+   \item Pour tout i (1:N)
+   \item simuler  les composantes de $\theta_1$ suivant la loi  $p(\theta_i^1| \theta_{-i}^0, \alpha ,\beta , y)$ 
+   avec $\theta_i^1$ la ieme composante de $\theta_1$ et $\theta_{-i}^0 = (\theta_1^0,\theta_2^0,..,\theta_{i-1}^0,\theta_{i+1}^0 ,..,\theta_n^0)$.
+   \item Bouclé sur l'étape 2  avec $\theta_0 = \theta_1 $,
+              
+  \end{itemize}
+Afin de simuler la loi $p(\theta | \alpha ,\beta , y )$  par ce principe, il faut commencer par trouver la loi marginale $(\theta_i | \theta_{-i},\alpha ,\beta , y)$, En effet, puisque les $\theta_i$ sont indépendants donc on trouve facilement:
+  \begin{align*}
+   p(\theta_i| \theta_{-i},\alpha ,\beta , y) \propto \Pi {n_i\choose y_i} \theta _i^{y_i+ \alpha -1} ( 1 - \theta ) ^{n_i - y_i + \beta-1} \\
+   \propto \theta _i^{y_i+ \alpha -1} ( 1 - \theta ) ^{n_i - y_i + \beta-1}
+  \end{align*}
+Donc $(\theta_i | \theta_{-i},\alpha ,\beta , y) \sim Beta( y_i+ \alpha -1,n_i - y_i + \beta-1)$. \\  
+Enfin et  Après N itérations on choisit un $p<N$ et on prend les valeurs de $\theta_t$ pour $t>p$.Nous avons mis le code de l'algorithme en annexe.
+\section{Analyse des résultats et comparaison}
+Nous donnons ici quelques valeurs importantes:
+\begin{center}
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline 
+    Numéro  classe &  la  données $\theta_i$  &  Moyenne &  Médiane  & Intervale  de
+    crédibilité 95 \\ 
+    \hline
+    \hline 
+    41 & 0.15 & 0.153 & 0.14320 & [0.03,0.32] \\ 
+    \hline
+    71 & 0.28  & 0.292 & 0.28 & [0.092,0.54]   \\
+    \hline  
+  \end{tabular}
+\end{center}
+On remarque bien que les moyennes des $\theta_i$ sont très proches de leurs l'estimateurs du maximum de vraisemblance. On peux faire une comparaison globale, En effet on calcule la variance entre le vecteur des moyennes des $\theta_i$ et le vecteur des estimateurs de maximum de vraisemblance (voire annexe): cette variance vaut $7,4*10^{-4}$. \\ 
+Graphiquement,  on trace  les données  simulées en  fonction des  estimateurs de
+maximum de  vraisemblance après  les avoir  triés . On  obtient donc  une droite
+(voire la figure) montrant que les données viennent de la même loi.
+\begin{figure}[h!]
+\centering
+\subfloat[]{\includegraphics[width=0.5\textwidth]{exo2GrapheProb.pdf}\label{Sl_compar_s}}
+\caption{Comparaison données simulées et expérimentales }
+\end{figure} 
+\FloatBarrier
+\newpage
+
+\section{Conclusion}
+D'après la courbe on remarque que les fréquences d'apparitions de la maladie en
+fonction du risque  ($\thetha_i$ ) sont perturbees lorsque  ce dernier est petit
+.  Par contre on  remarque que  cette perturbation  disparait lorsque  le risque
+croit,  cela  explique la  linéarité  des points  pour  des  valeurs grandes  du
+risque.  On peut  aussi une  estimation  du risque  en prennant  la moyenne  des
+données  simulées, ainsi  que  la variance  pour  voir comment  ce phenomene  se
+developpe d'une classe à une autre.
+
+
+\newpage
+\appendix
+
+\section{ Modèle de Poisson}
+ \subsection{Simulation Gamma par Algorithme de Métropolis sous R}
+\newpage
+\begin{lstlisting}
+Y <- c(9,5,7,15,9,0,22,1,9,11,9,13,12,11,2,1,26,7,0)
+theta.post.exo1 <- function(Y,Nbite=10^4,  theta.0= 0.4){
+  n=length(Y)
+  theta.post <- theta.0
+  Lambda=1/mean(Y)
+  m=mean(Y)
+  for( i in 1:Nbite)
+    {
+      ## proposal
+      theta.1 <- rexp(1,Lambda)
+      ## calcul ration
+      ratio1 <-exp(-(n-Lambda)*(theta.1-theta.0))
+      ratio2 <- (theta.1/theta.0)^(n*m-1)
+      ratio <-  ratio1 * ratio2
+      if (runif(1)<ratio){
+        theta.0 <- theta.1
+      }
+      theta.post <- c(theta.post,theta.0)
+    }
+  
+  ## par(mfrow = c(1,2));
+  ## par(new=TRUE)
+  u <- seq(0, 20, length= 200);
+  plot(u, dgamma(u,shape=n*mean(Y),scale=1/n),xlim=c(6,12));
+  hist(theta.post,xlim=c(6,12),prob=T,add=T);
+  return (theta.post)
+  }
+
+\end{lstlisting}
+\subsection{Comparaison loi Gamma avec l'histogramme des données simulées}
+\begin{lstlisting}
+u <- seq(6, 11, length= 200)
+plot(u, dgamma(u, n*mean(Y), n), type="n", ylab="Frequency", main="Posterior distribution")
+hist(theta.post[12:10^4], col = "blue" , prob = T, add = T)
+lines(u, dgamma(u, n*mean(Y), n), col = 2, lwd = 3)
+\end{lstlisting}
+
+\subsection{Graphe de probabilité}
+\begin{lstlisting}
+v<-rgamma(Nbite,n*mean(Y),n)
+qqplot(v,theta.post)
+abline(0,1,col="red")
+\end{lstlisting}
+
+\section{Annexe Modele Hierarchique}
+\label{sec:annexe-modele-hier}
+
+
+\begin{lstlisting}
+
+# def des fonctions de calcule
+# retourne un estimateur de alpha de la loi beta(alpha,beta) 
+
+estim.alpha <- function(x)
+{
+  return (x[1]*((x[1]*(1-x[1])/(x[2]))-1))
+}
+
+
+# retourne un estimateur de beta de la loi beta(alpha,beta)
+estim.beta <- function(x)
+{
+  return ((1-x[1])*((x[1]*(1-x[1])/(x[2]))-1))
+}
+
+
+# lecture du fichier de donnÃ©es
+  data <- read.table("r.asc", sep=" ")
+
+# def des paramettres du pb
+Nbite=1
+theta.0 <- matrix(nrow=1,ncol=2)
+theta.1 <- matrix(nrow=1,ncol=2)
+theta.post <- matrix(nrow=Nbite+1,ncol=2)
+Lambda <- matrix(nrow=1,ncol=2)
+m1=0
+m2=0
+  
+  
+# initialisation des paramettres
+yi<-data[,1]
+ni<-data[,2]
+n<-length(data[,1])
+theta.exper<-c(1,1)
+Niter=10^4
+thetai.post <- matrix(nrow=Niter+1,ncol=n)
+  
+  
+# theta apartir des donnÃ©es
+  for ( i in (1:n)){
+    theta.exper[i] <-  yi[i]/ni[i]
+  }  
+
+# Generation de alpha et de beta
+    alpha.estim <-estim.alpha(c(mean(theta.exper),var(theta.exper)))  
+    beta.estim<- estim.beta(c(mean(theta.exper),var(theta.exper)))  
+
+  # Valeur initiale arbitraire
+  for ( i in (1:n)){
+   thetai.post[1,i] <- 0.01 
+  }  
+  
+  
+  for ( j in (1:Niter)) {
+
+  # Generation de alpha et de beta
+  
+    # initialisation par une valeur arbitraire
+    theta.0 <-c(1,1)    
+    Lambda <- c(1/alpha.estim,1/beta.estim)
+    theta.post[1, ] <- theta.0
+  
+    for( i in 1:Nbite)
+    {
+     
+      #proposal
+      theta.1 <-   c(rexp(1,Lambda[1]),rexp(1,Lambda[2])) # c(runif(1,0,100),runif(1,0,100)) #
+      ## calcul ration
+      ratio1 <- ((theta.1[1]+theta.1[2])/(theta.0[1]+theta.0[2]))^(-5/2)
+      ratio2 <- exp(-Lambda[1]*(theta.0[1]-theta.1[1])-Lambda[2]*(theta.0[2]-theta.1[2]))
+      ratio3 <-  (prod(thetai.post[j,]))^(theta.1[1]-theta.0[1])*(prod(1-thetai.post[j,]))^(theta.1[2]-theta.0[2])
+      ratio <- ratio1*ratio2*ratio3 
+      if (runif(1)<ratio){
+        theta.0 <- theta.1
+      }
+      theta.post[i+1, ] <- theta.0
+    }
+    
+    # estimation de aplha et beta
+    m<-mean(theta.post[,1])/(mean(theta.post[,1])+mean(theta.post[,2]))
+    m1<-c(m1,theta.post[2,1])
+    m2<-c(m2,theta.post[2,2])
+    
+    alpha1<-theta.post[2,1]
+    beta1<- theta.post[2,2]
+    
+    
+    #alpha1<-c(alpha1,mean(theta.post[,1]))
+    #beta1<-c(alpha2,mean(theta.post[,2]))
+  
+    # Echantillonage de Gibs pour les theta_i
+    thetai.post[j+1,]=rbeta(n,shape1=yi+alpha1,shape2=ni- yi + beta1 )
+  }
+    
+  
+  
+  moyen.theta.post <- matrix(nrow=1,ncol=n)
+  
+  p = 300
+  for (k in (1:n) )
+  {
+  moyen.theta.post[k]<-mean(thetai.post[,k][p:length(thetai.post[,1])])
+  }
+
+  ## intervalle de credibilitÃ©
+  
+  thetha.tri <- matrix(nrow=n,ncol=Niter+1)
+  
+  for (k in (1:n) )
+  {
+    thetha.tri[k,]<-sort(thetai.post[,k])
+  }
+
+  interval.cred <- matrix(nrow=n,ncol=2)
+    
+ for (k in (1:n) )
+  {
+    interval.cred[k,]<-c(thetha.tri[k,25],thetha.tri[k,975])
+  }
+  
+  ## Comparaison rÃ©sultat expÃ©rementale et thÃ©orique
+
+  erreur<-var(theta.exper-moyen.theta.post[1,])
+  moyen.Sort.Expr<-sort(theta.exper)
+  moyen.Sort.Post<-sort(moyen.theta.post[1,])
+  plot(moyen.Sort.Expr,moyen.Sort.Post)
+  
+  
+\end{lstlisting}
+
+
+
+\end{document}

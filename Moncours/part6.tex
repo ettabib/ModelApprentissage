@@ -1,0 +1,38 @@
+\section{Markov chains}
+
+\begin{de}
+
+Let's consider a process :
+
+\begin{eqnarray*}
+p(\theta_{t+1}|\theta_{t,}\theta_{t-1,}...,\theta_{0}) & = & p(\theta_{t+1}|\theta_{t})\longleftarrow\text{(Iterative process)}\\
+ & = & p(\theta_{1}|\theta_{0})\longleftarrow\text{(homogenius process, don't depend on time)}
+\end{eqnarray*}
+
+\begin{itemize}
+\item We said that the chain is homogenous if the conditionnal law don't
+depend on time t
+\item Notation : ``process''
+\[
+p(\theta_{t+1}=\theta'|\theta_{t}=0)=p(\theta'|\theta)
+\]
+
+\item We note k the transition kernel
+\[
+k(\theta_{0},\theta_{1})=p(\theta_{1}|\theta_{0})
+\]
+
+\item If E is finite then $K=(k(i,j))_{i,j}\in E$ is called a transition
+matrix it satisfied:
+\begin{eqnarray*}
+0\leq k(i,j)\leq1 & \& & \sum_{j\in E}k(i,j)=1\\
+\end{eqnarray*}
+
+\item if E is continuous then $k(\theta_{0},\theta_{1})$ is a function
+:
+\begin{eqnarray*}
+k(\theta_{0},\theta_{1})\geq0 & \& & \int_{E}\underbrace{k(\theta_{0},\theta_{1})}_{\text{transition kernel}}d\theta_{1}=1,\forall\theta_{0}\\
+\end{eqnarray*}
+
+\end{itemize}
+\end{de}
